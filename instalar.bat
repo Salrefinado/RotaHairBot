@@ -40,13 +40,13 @@ echo [1/6] Baixando RotaHair do GitHub...
 
 cd /d "%USERPROFILE%\Documents"
 
-if exist BotRotaHair-main (
+if exist RotaHairBot-main (
     echo     Removendo versao anterior...
-    rmdir /s /q BotRotaHair-main > nul 2>&1
+    rmdir /s /q RotaHairBot-main > nul 2>&1
 )
 if exist rotahair.zip del /q rotahair.zip > nul 2>&1
 
-curl -L --progress-bar -o rotahair.zip https://github.com/Salrefinado/BotRotaHair/archive/refs/heads/main.zip
+curl -L --progress-bar -o rotahair.zip https://github.com/Salrefinado/RotaHairBot/archive/refs/heads/main.zip
 if %errorlevel% neq 0 (
     echo [ERRO] Falha ao baixar o projeto. Verifique sua conexao.
     pause
@@ -57,13 +57,13 @@ tar -xf rotahair.zip
 del /q rotahair.zip
 
 :: ── Trava de seguranca para evitar execucao na raiz ──
-if not exist "BotRotaHair-main" (
-    echo [ERRO] A pasta BotRotaHair-main nao foi encontrada apos a extracao!
-    echo O download falhou ou o repositorio Salrefinado/BotRotaHair esta privado.
+if not exist "RotaHairBot-main" (
+    echo [ERRO] A pasta RotaHairBot-main nao foi encontrada apos a extracao!
+    echo O download falhou ou o repositorio Salrefinado/RotaHairBot esta privado.
     pause
     exit /b 1
 )
-cd BotRotaHair-main
+cd RotaHairBot-main
 
 echo [OK] Projeto baixado em: %CD%
 
