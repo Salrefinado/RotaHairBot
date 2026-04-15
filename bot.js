@@ -104,17 +104,19 @@ client.on('message', async (msg) => {
     if (msg.isGroupMsg || msg.from.includes('@g.us')) return;
 
     const sender = msg.from.replace(/\D/g, '').replace(/^0+/, '');
-
-    if (NUMERO_TESTE) {
-      const numTeste = NUMERO_TESTE.replace(/\D/g, '');
-      if (sender !== numTeste) return;
-    }
-
     const text = msg.body?.trim();
     if (!text) return;
 
     console.log(`\n📨 [${new Date().toLocaleTimeString('pt-BR')}] De: ${sender}`);
     console.log(`   Mensagem: "${text}"`);
+
+    if (NUMERO_TESTE) {
+      const numTeste = NUMERO_TESTE.replace(/\D/g, '');
+      if (sender !== numTeste) {
+         console.log(`   ⚠️ Ignorado: Modo de teste ativo (só responde para ${numTeste}).`);
+         return;
+      }
+    }
 
     const ctx = await fetchContext();
     if (!ctx) {
@@ -151,7 +153,7 @@ async function handleClientMessage(msg, text, ctx) {
 
   try {
     const response = await anthropic.messages.create({
-      model:      'claude-haiku-4-5-2025100',
+      model:      'claude-haiku-4-5-20251001',
       max_tokens: 600,
       system:     systemPrompt,
       messages:   [{ role: 'user', content: text }],
@@ -181,7 +183,7 @@ async function handleOwnerMessage(msg, text, ctx) {
   let rawJson;
   try {
     const response = await anthropic.messages.create({
-      model:      'claude-haiku-4-5-2025100',
+      model:      'claude-haiku-4-5-20251001',
       max_tokens: 300,
       system:     systemPrompt,
       messages:   [{ role: 'user', content: text }],
